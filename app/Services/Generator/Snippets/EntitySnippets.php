@@ -1,5 +1,7 @@
 <?php namespace Norm\Services\Generator\Snippets;
 
+use Norm\Services\Generator\Node;
+
 abstract class EntitySnippets {
 
 	const TIMESTAMPS = <<<EOF
@@ -8,98 +10,35 @@ abstract class EntitySnippets {
 	 *
 	 * @var bool
 	 */
-	public \$timestamps = true;
+	public \$timestamps = false;
 EOF;
 
-	public static function hasOne($name, $relation, $foreignKey = null, $localKey = null) {
-		if ($foreignKey == null && $localKey == null) {
-			return <<<EOF
-		public function $name() {
-			return \$this->hasOne('Norm\\Entities\\$relation\\$relation');
-		}
-EOF;
-		}
-		if ($localKey == null) {
-			return <<<EOF
-		public function $name() {
-			return \$this->hasOne('Norm\\Entities\\$relation\\$relation', '$foreignKey');
-		}
-EOF;
+	public static function relation(Node $relationNode) {
+
+		$hasOne = ['foreignKey', 'localKey'];
+		$belongsTo = ['localKey', 'foreignKey'];
+		$hasMany = ['foreignKey', 'localKey'];
+		$belongsToMany = ['table', 'localKey', 'foreignKey'];
+
+		$type = $relationNode->getAttribute('type');
+		$name = $relationNode->getAttribute('name');
+		$relatedEntity = $relationNode->getAttribute('entity');
+
+		$args = "'Norm\\Entities\\$relatedEntity\\$relatedEntity'";
+		foreach ($$type as $var) {
+			$value = $relationNode->getAttribute($var);
+			if (!empty($value)) {
+				$args .= ", '$value'";
+			}
+			else {
+				break;
+			}
 		}
 
 		return <<<EOF
-		public function $name() {
-			return \$this->hasOne('Norm\\Entities\\$relation\\$relation', '$foreignKey', '$localKey');
-		}
-EOF;
+	public function $name() {
+		return \$this->$type($args);
 	}
-
-	public static function belongsTo($name, $relation, $localKey = null, $parentKey = null) {
-		if ($localKey == null && $parentKey == null) {
-			return <<<EOF
-		public function $name() {
-			return \$this->belongsTo('Norm\\Entities\\$relation\\$relation');
-		}
-EOF;
-		}
-		if ($parentKey == null) {
-			return <<<EOF
-		public function $name() {
-			return \$this->belongsTo('Norm\\Entities\\$relation\\$relation', '$localKey');
-		}
-EOF;
-		}
-
-		return <<<EOF
-		public function $name() {
-			return \$this->belongsTo('Norm\\Entities\\$relation\\$relation', '$localKey', '$parentKey');
-		}
-EOF;
-	}
-
-	public static function hasMany($name, $relation, $foreignKey = null, $localKey = null) {
-		if ($foreignKey == null && $localKey == null) {
-			return <<<EOF
-		public function $name() {
-			return \$this->belongsTo('Norm\\Entities\\$relation\\$relation');
-		}
-EOF;
-		}
-		if ($localKey == null) {
-			return <<<EOF
-		public function $name() {
-			return \$this->belongsTo('Norm\\Entities\\$relation\\$relation', '$foreignKey');
-		}
-EOF;
-		}
-
-		return <<<EOF
-		public function $name() {
-			return \$this->belongsTo('Norm\\Entities\\$relation\\$relation', '$foreignKey', '$localKey');
-		}
-EOF;
-	}
-
-	public static function belongsToMany($name, $relation, $table = null, $localKey = null, $foreignKey = null) {
-		if ($table = null && $localKey == null && $foreignKey == null) {
-			return <<<EOF
-		public function $name() {
-			return \$this->belongsTo('Norm\\Entities\\$relation\\$relation');
-		}
-EOF;
-		}
-		if ($foreignKey == null) {
-			return <<<EOF
-		public function $name() {
-			return \$this->belongsTo('Norm\\Entities\\$relation\\$relation', '$localKey');
-		}
-EOF;
-		}
-
-		return <<<EOF
-		public function $name() {
-			return \$this->belongsTo('Norm\\Entities\\$relation\\$relation', '$localKey', '$foreignKey');
-		}
 EOF;
 	}
 }

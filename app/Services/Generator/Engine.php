@@ -1,6 +1,7 @@
 <?php namespace Norm\Services\Generator;
 
 use Norm\Services\Generator\Modules\EntityModule;
+use Norm\Services\Generator\Modules\MigrationModule;
 use Norm\Services\Generator\Modules\Module;
 use Norm\Services\Generator\Readers\XmlNodeReader;
 
@@ -11,7 +12,10 @@ class Engine {
 	 * @var array
 	 */
 	protected $modules = [
-		'entity'    =>      EntityModule::class
+		'entity' => [
+			MigrationModule::class,
+			EntityModule::class,
+		]
 	];
 
 	/**
@@ -48,13 +52,23 @@ class Engine {
 	protected function traverseTree(Node $node) {
 		$nodeName = $node->getName();
 		if (array_key_exists($nodeName, $this->modules)) {
-			/** @var Module $module */
-			$module = new $this->modules[$nodeName]();
-			$module->generate($node);
+			$matchedModules = $this->modules[$nodeName];
+
+			if (!is_array($matchedModules)) $matchedModules = [$matchedModules];
+
+			foreach ($matchedModules as $moduleName) {
+				$this->runModule($moduleName, $node);
+			}
 		}
 
 		foreach($node->getChildren() as $child) {
 			$this->traverseTree($child);
 		}
+	}
+
+	protected function runModule($moduleName, Node $node) {
+		/** @var Module $module */
+		$module = new $moduleName();
+		$module->generate($node);
 	}
 }

@@ -15,10 +15,7 @@ use Norm\Services\Generator\Engine;
 use Norm\Services\Generator\Readers\XmlNodeReader;
 
 get('/', function() {
-
-	$engine = new Engine();
-
-	$engine->run();
+	$engine = (new Engine())->run();
 
 	dd("Done");
 

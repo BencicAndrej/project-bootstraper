@@ -19,5 +19,4 @@ class ?{name} extends Model {
     protected $guarded = [?{guarded}];
 
 ?{body}
-
 }

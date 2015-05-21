@@ -38,12 +38,13 @@ class EntityModule implements Module {
 
 	protected function formBody(Node $node) {
 		$body = "";
-		if($node->getAttribute('timestamps') == true) {
-			$body .= EntitySnippets::TIMESTAMPS;
+		if ($node->getAttribute('timestamps') === 'false') {
+			$body .= EntitySnippets::TIMESTAMPS . "\n\n";
 		}
 
+		/** @var Node $relation */
 		foreach ($node->getChildren('relation') as $relation) {
-
+			$body .= EntitySnippets::relation($relation) . "\n\n";
 		}
 
 		return $body;

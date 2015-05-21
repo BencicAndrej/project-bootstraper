@@ -15,7 +15,7 @@
 
 			<command name="CreateUser" />
 		</entity>
-		<entity name="PhoneNumber" table="phone_numbers">
+        <entity name="PhoneNumber" table="phone_numbers" timestamps="true">
 
             <attribute name="user_id" type="integer" unsigned="true" />
             <attribute name="type" type="integer" default="0" />
