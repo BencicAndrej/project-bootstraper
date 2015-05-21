@@ -14,11 +14,18 @@ class Template {
 	protected $attributes;
 
 	/**
+	 * @var File
+	 */
+	protected $file;
+
+	/**
 	 * @param string $templatePath
 	 * @param array $attributes
 	 */
 	function __construct($templatePath, array $attributes = []) {
-		$this->templateData = file_get_contents($templatePath);
+		$this->file = new File();
+
+		$this->templateData = $this->file->get($templatePath);
 		$this->attributes = $attributes;
 	}
 
@@ -43,7 +50,7 @@ class Template {
 		foreach ($this->attributes as $key => $value) {
 			$presentTags[] = $key;
 		}
-		return array_diff($this->getTags(), $presentTags);
+		return array_values(array_diff($this->getTags(), $presentTags));
 	}
 
 	/**
@@ -94,26 +101,9 @@ class Template {
 			$output = preg_replace('/\?\{' . $key . '\}/s', $value, $output);
 		}
 
-		$this->createDirectoriesForPath($outputPath);
+		$this->file->createStructure($outputPath);
 
-		file_put_contents($outputPath, $output);
-	}
-
-	public function createDirectoriesForPath($path) {
-		$directory = pathinfo($path, PATHINFO_DIRNAME);
-
-		if (is_dir($directory)) {
-			return true;
-		}
-		else {
-			if ($this->createDirectoriesForPath($directory)) {
-				if (mkdir($directory)) {
-					return true;
-				}
-			}
-		}
-
-		return false;
+		$this->file->put($outputPath, $output);
 	}
 
 }

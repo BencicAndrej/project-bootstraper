@@ -32,13 +32,12 @@ class File {
 	 *
 	 * @param string $path
 	 * @param string $contents
-	 * @param bool $lock
 	 * @return int
 	 */
-	public function put($path, $contents, $lock = false) {
-		$this->makeDirectory($path);
+	public function put($path, $contents) {
+		$this->createStructure($path);
 
-		return file_put_contents($path, $contents, $lock ? LOCK_EX : 0);
+		return file_put_contents($path, $contents);
 	}
 
 	/**
@@ -101,7 +100,7 @@ class File {
 	 * @return bool
 	 */
 	public function move($path, $target) {
-		$this->makeDirectory($target);
+		$this->createStructure($target);
 
 		return rename($path, $target);
 	}
@@ -114,7 +113,7 @@ class File {
 	 * @return bool
 	 */
 	public function copy($path, $target) {
-		$this->makeDirectory($target);
+		$this->createStructure($target);
 
 		return copy($path, $target);
 	}
@@ -126,8 +125,6 @@ class File {
 	 * @return string
 	 */
 	public function name($path) {
-//		if (!$this->exists($path)) return null;
-
 		return pathinfo($path, PATHINFO_FILENAME);
 	}
 
@@ -182,16 +179,6 @@ class File {
 	}
 
 	/**
-	 * Determine if the given path is writable.
-	 *
-	 * @param  string $path
-	 * @return bool
-	 */
-	public function isWritable($path) {
-		return is_writable($path);
-	}
-
-	/**
 	 * Determine if the given path is a file.
 	 *
 	 * @param  string $file
@@ -208,7 +195,9 @@ class File {
 	 * @return array
 	 */
 	public function files($directory) {
-		$glob = glob($directory . '/*');
+		if (substr($directory, -1) != "/")
+			$directory .= "/";
+		$glob = glob($directory . '*');
 
 		if ($glob === false) return array();
 
@@ -222,19 +211,22 @@ class File {
 
 	/**
 	 * Create directory structure recursively if the directory does not exist.
+	 * Note that it will not create the rightmost part of the path provided.
+	 * This function provides the safe usage of functions like mkdir or touch without
+	 * worrying about the directory does not exist errors.
 	 *
 	 * @param string $path
 	 * @param int $mode
 	 * @return bool
 	 */
-	public function makeDirectory($path, $mode = 0755) {
+	public function createStructure($path, $mode = 0755) {
 		$directory = pathinfo($path, PATHINFO_DIRNAME);
 
 		if (is_dir($directory)) {
 			return true;
 		}
 		else {
-			if ($this->makeDirectory($directory, $mode)) {
+			if ($this->createStructure($directory, $mode)) {
 				if (mkdir($directory, $mode)) {
 					return true;
 				}

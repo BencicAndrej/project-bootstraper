@@ -33,10 +33,12 @@ class Node {
 	 */
 	public function __construct($name, Node $parent = null) {
 		$this->name = $name;
-		$this->parent = $parent;
 		$this->children = [];
 		$this->childPointer = 0;
 		$this->attributes = [];
+
+		if ($parent)
+			$parent->addChild($this);
 	}
 
 	/**
@@ -76,12 +78,7 @@ class Node {
 	 * @return Node
 	 */
 	public function setAttributes(array $attributes) {
-		if (empty($attributes)) {
-			$this->attributes = [];
-		}
-		else {
-			$this->attributes = $attributes;
-		}
+		$this->attributes = $attributes;
 
 		return $this;
 	}
