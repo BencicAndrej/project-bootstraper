@@ -29,13 +29,14 @@
             <attribute name="address" type="string" nullable="false" />
             <attribute name="number" type="string" nullable="false" />
 
-			<relation type="belongsTo" name="tenant" entity="User" localKey="user_id" />
+            <repository name="LocationRepository"/>
+
+            <relation type="belongsTo" name="tenant" entity="User" localKey="user_id"/>
 		</entity>
 	</entities>
 
 	<services>
-		<service name="Paypal" />
-		<service name="Facebook" />
+        <service name="Repository"/>
 	</services>
 
     <packages>

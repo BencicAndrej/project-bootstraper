@@ -1,0 +1,7 @@
+<?php namespace Norm\Entities\?{model}\Repository;
+
+use Norm\Services\Repository\AbstractRepositoryInterface;
+
+interface ?{model}Repository extends AbstractRepositoryInterface {
+
+}

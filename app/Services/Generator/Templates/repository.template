@@ -1,0 +1,20 @@
+<?php namespace Norm\Entities\?{model}\Repository;
+
+use Norm\Entities\?{model}\?{model};
+use Norm\Services\Repository\AbstractEloquentRepository;
+
+class ?{name} {
+
+	/**
+	 * @var ?{model}
+	 */
+	protected $model;
+
+	/**
+	 * @param ?{model} $model
+	 */
+	public function __construct(?{model} $model) {
+		$this->model = $model;
+	}
+
+}

@@ -1,7 +1,6 @@
 <?php namespace Norm\Services\Generator\Modules;
 
 use Norm\Services\Generator\Node;
-use Norm\Services\Generator\Snippets\EntitySnippets;
 use Norm\Services\Generator\Template;
 
 class EntityModule implements Module {
@@ -11,7 +10,7 @@ class EntityModule implements Module {
 	 *
 	 * @var string
 	 */
-	protected $templatePath = 'app/Services/Generator/Templates/model.template';
+	protected $template = 'model.template';
 
 	/**
 	 * Base namespace for generated entities.
@@ -27,7 +26,7 @@ class EntityModule implements Module {
 		$attributes['body'] = $this->formBody($node);
 		$attributes['guarded'] = $this->formGuarded($node);
 
-		$template = new Template(base_path($this->templatePath), $attributes);
+		$template = new Template(config('generator.templates_path') . $this->template, $attributes);
 
 		$targetPath = config('generator.workbench_path') .
 			$node->findParent('project', 'name') . '/app/Entities/' .
@@ -39,12 +38,12 @@ class EntityModule implements Module {
 	protected function formBody(Node $node) {
 		$body = "";
 		if ($node->getAttribute('timestamps') === 'false') {
-			$body .= EntitySnippets::TIMESTAMPS . "\n\n";
+			$body .= self::TIMESTAMPS . "\n\n";
 		}
 
 		/** @var Node $relation */
 		foreach ($node->getChildren('relation') as $relation) {
-			$body .= EntitySnippets::relation($relation) . "\n\n";
+			$body .= $this->formRelation($relation) . "\n\n";
 		}
 
 		return $body;
@@ -60,4 +59,43 @@ class EntityModule implements Module {
 
 		return $guarded;
 	}
+
+	protected function formRelation(Node $relationNode) {
+
+		$hasOne = ['foreignKey', 'localKey'];
+		$belongsTo = ['localKey', 'foreignKey'];
+		$hasMany = ['foreignKey', 'localKey'];
+		$belongsToMany = ['table', 'localKey', 'foreignKey'];
+
+		$type = $relationNode->getAttribute('type');
+		$name = $relationNode->getAttribute('name');
+		$relatedEntity = $relationNode->getAttribute('entity');
+
+		$args = "'Norm\\Entities\\$relatedEntity\\$relatedEntity'";
+		foreach ($$type as $var) {
+			$value = $relationNode->getAttribute($var);
+			if (!empty($value)) {
+				$args .= ", '$value'";
+			}
+			else {
+				break;
+			}
+		}
+
+		return <<<EOF
+	public function $name() {
+		return \$this->$type($args);
+	}
+EOF;
+	}
+
+	const TIMESTAMPS = <<<EOF
+	/**
+	 * Indicates if the model should be timestamped.
+	 *
+	 * @var bool
+	 */
+	public \$timestamps = false;
+EOF;
+
 }

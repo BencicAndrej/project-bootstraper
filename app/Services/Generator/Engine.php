@@ -3,6 +3,9 @@
 use Norm\Services\Generator\Modules\EntityModule;
 use Norm\Services\Generator\Modules\MigrationModule;
 use Norm\Services\Generator\Modules\Module;
+use Norm\Services\Generator\Modules\ProjectModule;
+use Norm\Services\Generator\Modules\RepositoryModule;
+use Norm\Services\Generator\Modules\ServiceModule;
 use Norm\Services\Generator\Readers\XmlNodeReader;
 
 class Engine {
@@ -12,10 +15,10 @@ class Engine {
 	 * @var array
 	 */
 	protected $modules = [
-		'entity' => [
-			MigrationModule::class,
-			EntityModule::class,
-		]
+		'project'    => ProjectModule::class,
+		'entity'     => [EntityModule::class, MigrationModule::class],
+		'repository' => RepositoryModule::class,
+		'service'    => ServiceModule::class,
 	];
 
 	/**
@@ -61,12 +64,12 @@ class Engine {
 			}
 		}
 
-		foreach($node->getChildren() as $child) {
+		foreach ($node->getChildren() as $child) {
 			$this->traverseTree($child);
 		}
 	}
 
-	protected function runModule($moduleName, Node $node) {
+	public static function runModule($moduleName, Node $node) {
 		/** @var Module $module */
 		$module = new $moduleName();
 		$module->generate($node);

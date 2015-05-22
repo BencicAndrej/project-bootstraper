@@ -11,7 +11,7 @@ class Kernel extends ConsoleKernel {
 	 * @var array
 	 */
 	protected $commands = [
-		'Norm\Console\Commands\GenerateCommand',
+		'Norm\Console\Commands\UpdateBaseLaravelProject',
 	];
 
 	/**
