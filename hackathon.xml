@@ -1,7 +1,7 @@
 <project name="Sparks" database="sparks">
 
 	<entities>
-        <entity name="Ping" table="pings" timestamps="true">
+        <entity name="Spark" table="sparks" timestamps="true">
             <guarded name="id"/>
 
             <attribute name="id" type="increments" />
@@ -12,9 +12,9 @@
 
             <relation type="belongsTo" name="location" entity="Location" localKey="location_id"/>
             <relation type="belongsTo" name="cluster" entity="Cluster" localKey="cluster_id"/>
-            <relation type="hasMany" name="resources" entity="Resource" foreignKey="ping_id"/>
+            <relation type="hasMany" name="resources" entity="Resource" foreignKey="spark_id"/>
 
-            <repository name="PingRepository" interface="true" implementation="EloquentPingRepository"/>
+            <repository name="SparkRepository" interface="true" implementation="EloquentSparkRepository"/>
 
         </entity>
 
@@ -32,7 +32,7 @@
             <attribute name="display_image" type="string" nullable="true"/>
 
             <relation type="belongsTo" name="location" entity="Location" localKey="location_id"/>
-            <relation type="hasMany" name="pings" entity="Ping" foreignKey="cluster_id"/>
+            <relation type="hasMany" name="sparks" entity="Spark" foreignKey="cluster_id"/>
 
             <repository name="ClusterRepository" interface="true" implementation="EloquentClusterRepository"/>
         </entity>
@@ -54,7 +54,7 @@
             <guarded name="id"/>
 
             <attribute name="id" type="increments"/>
-            <attribute name="ping_id" type="integer" unsigned="true"/>
+            <attribute name="spark_id" type="integer" unsigned="true"/>
             <attribute name="type" type="integer"/>
             <attribute name="src" type="text"/>
             <attribute name="relevance" type="integer"/>
