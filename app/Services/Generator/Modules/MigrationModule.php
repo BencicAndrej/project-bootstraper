@@ -40,9 +40,10 @@ class MigrationModule implements Module {
 		foreach ($node->getChildren('attribute') as $attribute) {
 			if (!empty($columns)) $columns .= "\t\t\t";
 			$columns .= "\$table->{$attribute->getAttribute('type')}('{$attribute->getAttribute('name')}')";
-			if ($attribute->getAttribute('nullable') == true) $columns .= "->nullable()";
+			if ($attribute->getAttribute('nullable') === 'true') $columns .= "->nullable()";
 			if ($attribute->getAttribute('default')) $columns .= "->default('{$attribute->getAttribute('default')}')";
-			if ($attribute->getAttribute('unique') == true) $columns .= "->unique()";
+			if ($attribute->getAttribute('unique') === 'true') $columns .= "->unique()";
+			if ($attribute->getAttribute('unsigned') === 'true') $columns .= "->unsigned()";
 			$columns .= ";\n";
 		}
 

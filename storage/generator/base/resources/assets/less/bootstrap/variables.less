@@ -2,6 +2,7 @@
 // Variables
 // --------------------------------------------------
 
+
 //== Colors
 //
 //## Gray and brand colors for use across Bootstrap.
@@ -24,6 +25,7 @@
 @brand-warning: #f0ad4e;
 @brand-danger: #d9534f;
 
+
 //== Scaffolding
 //
 //## Settings for some of the most global styles.
@@ -39,6 +41,7 @@
 @link-hover-color: darken(@link-color, 15%);
 //** Link hover decoration.
 @link-hover-decoration: underline;
+
 
 //== Typography
 //
@@ -81,6 +84,7 @@
 @headings-line-height: 1.1;
 @headings-color: inherit;
 
+
 //== Iconography
 //
 //## Specify custom location and filename of the included Glyphicons icon font. Useful for those including Bootstrap via Bower.
@@ -91,6 +95,7 @@
 @icon-font-name: "glyphicons-halflings-regular";
 //** Element ID within SVG icon file.
 @icon-font-svg-id: "glyphicons_halflingsregular";
+
 
 //== Components
 //
@@ -125,6 +130,7 @@
 //** Carets increase slightly in size for larger components.
 @caret-width-large: 5px;
 
+
 //== Tables
 //
 //## Customizes the `.table` component with basic values, each used across all table variations.
@@ -144,6 +150,7 @@
 
 //** Border color for table and cell borders.
 @table-border-color: #ddd;
+
 
 //== Buttons
 //
@@ -176,6 +183,7 @@
 @btn-danger-border: darken(@btn-danger-bg, 5%);
 
 @btn-link-disabled-color: @gray-light;
+
 
 //== Forms
 //
@@ -223,6 +231,7 @@
 //** Disabled cursor for form controls and buttons.
 @cursor-disabled: not-allowed;
 
+
 //== Dropdowns
 //
 //## Dropdown menu container and contents.
@@ -257,6 +266,7 @@
 //** Deprecated `@dropdown-caret-color` as of v3.1.0
 @dropdown-caret-color: #000;
 
+
 //-- Z-index master list
 //
 // Warning: Avoid customizing these values. They're used for a bird's eye view
@@ -270,6 +280,7 @@
 @zindex-tooltip: 1070;
 @zindex-navbar-fixed: 1030;
 @zindex-modal: 1040;
+
 
 //== Media queries breakpoints
 //
@@ -309,6 +320,7 @@
 @screen-sm-max: (@screen-md-min - 1);
 @screen-md-max: (@screen-lg-min - 1);
 
+
 //== Grid system
 //
 //## Define your custom responsive grid.
@@ -322,6 +334,7 @@
 @grid-float-breakpoint: @screen-sm-min;
 //** Point at which the navbar begins collapsing.
 @grid-float-breakpoint-max: (@grid-float-breakpoint - 1);
+
 
 //== Container sizes
 //
@@ -341,6 +354,7 @@
 @container-large-desktop: (1140px + @grid-gutter-width);
 //** For `@screen-lg-min` and up.
 @container-lg: @container-large-desktop;
+
 
 //== Navbar
 //
@@ -377,6 +391,7 @@
 @navbar-default-toggle-icon-bar-bg: #888;
 @navbar-default-toggle-border-color: #ddd;
 
+
 // Inverted navbar
 // Reset inverted navbar basics
 @navbar-inverse-color: lighten(@gray-light, 15%);
@@ -401,6 +416,7 @@
 @navbar-inverse-toggle-hover-bg: #333;
 @navbar-inverse-toggle-icon-bar-bg: #fff;
 @navbar-inverse-toggle-border-color: #333;
+
 
 //== Navs
 //
@@ -430,6 +446,7 @@
 @nav-pills-active-link-hover-bg: @component-active-bg;
 @nav-pills-active-link-hover-color: @component-active-color;
 
+
 //== Pagination
 //
 //##
@@ -450,6 +467,7 @@
 @pagination-disabled-bg: #fff;
 @pagination-disabled-border: #ddd;
 
+
 //== Pager
 //
 //##
@@ -465,6 +483,7 @@
 
 @pager-disabled-color: @pagination-disabled-color;
 
+
 //== Jumbotron
 //
 //##
@@ -474,6 +493,7 @@
 @jumbotron-bg: @gray-lighter;
 @jumbotron-heading-color: inherit;
 @jumbotron-font-size: ceil((@font-size-base * 1.5));
+
 
 //== Form states and alerts
 //
@@ -495,6 +515,7 @@
 @state-danger-bg: #f2dede;
 @state-danger-border: darken(spin(@state-danger-bg, -10), 5%);
 
+
 //== Tooltips
 //
 //##
@@ -511,6 +532,7 @@
 @tooltip-arrow-width: 5px;
 //** Tooltip arrow color
 @tooltip-arrow-color: @tooltip-bg;
+
 
 //== Popovers
 //
@@ -540,6 +562,7 @@
 //** Popover outer arrow fallback color
 @popover-arrow-outer-fallback-color: darken(@popover-fallback-border-color, 20%);
 
+
 //== Labels
 //
 //##
@@ -561,6 +584,7 @@
 @label-color: #fff;
 //** Default text color of a linked label
 @label-link-hover-color: #fff;
+
 
 //== Modals
 //
@@ -594,6 +618,7 @@
 @modal-md: 600px;
 @modal-sm: 300px;
 
+
 //== Alerts
 //
 //## Define alert colors, border radius, and padding.
@@ -618,6 +643,7 @@
 @alert-danger-text: @state-danger-text;
 @alert-danger-border: @state-danger-border;
 
+
 //== Progress bars
 //
 //##
@@ -639,6 +665,7 @@
 @progress-bar-danger-bg: @brand-danger;
 //** Info progress bar color
 @progress-bar-info-bg: @brand-info;
+
 
 //== List group
 //
@@ -672,6 +699,7 @@
 @list-group-link-color: #555;
 @list-group-link-hover-color: @list-group-link-color;
 @list-group-link-heading-color: #333;
+
 
 //== Panels
 //
@@ -710,6 +738,7 @@
 @panel-danger-text: @state-danger-text;
 @panel-danger-border: @state-danger-border;
 @panel-danger-heading-bg: @state-danger-bg;
+
 
 //== Thumbnails
 //

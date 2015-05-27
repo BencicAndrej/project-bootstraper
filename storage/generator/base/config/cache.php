@@ -26,25 +26,25 @@ return [
 	|
 	*/
 
-	'stores'  => [
+	'stores' => [
 
-		'apc'       => [
+		'apc'      => [
 			'driver' => 'apc'
 		],
 
-		'array'     => [
+		'array'    => [
 			'driver' => 'array'
 		],
 
-		'database'  => [
-			'driver'     => 'database',
-			'table'      => 'cache',
+		'database' => [
+			'driver' => 'database',
+			'table'  => 'cache',
 			'connection' => null,
 		],
 
-		'file'      => [
+		'file'     => [
 			'driver' => 'file',
-			'path'   => storage_path() . '/framework/cache',
+			'path' => storage_path() . '/framework/cache',
 		],
 
 		'memcached' => [
@@ -56,8 +56,8 @@ return [
 			],
 		],
 
-		'redis'     => [
-			'driver'     => 'redis',
+		'redis'    => [
+			'driver' => 'redis',
 			'connection' => 'default',
 		],
 
@@ -74,6 +74,6 @@ return [
 	|
 	*/
 
-	'prefix'  => 'laravel',
+	'prefix' => 'laravel',
 
 ];

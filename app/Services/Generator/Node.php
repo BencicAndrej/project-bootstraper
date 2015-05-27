@@ -169,15 +169,21 @@ class Node {
 	 * Return all children with a passed name.
 	 *
 	 * @param string|null $name
+	 * @param bool $recursive
 	 * @return array
 	 */
-	public function getChildren($name = null) {
+	public function getChildren($name = null, $recursive = false) {
 		if ($name == null) return $this->children;
 
 		$result = [];
+		/** @var Node $child */
 		foreach($this->children as &$child) {
-			if($child->name == $name) {
+			if ($child->getName() == $name) {
 				$result[] = $child;
+			}
+
+			if ($recursive) {
+				$result = array_merge($result, $child->getChildren($name, $recursive));
 			}
 		}
 

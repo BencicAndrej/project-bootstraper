@@ -28,7 +28,7 @@ return [
 	|
 	*/
 
-	'cloud'   => 's3',
+	'cloud' => 's3',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -41,14 +41,14 @@ return [
 	|
 	*/
 
-	'disks'   => [
+	'disks' => [
 
-		'local'     => [
+		'local' => [
 			'driver' => 'local',
-			'root'   => storage_path() . '/app',
+			'root' => storage_path() . '/app',
 		],
 
-		's3'        => [
+		's3'    => [
 			'driver' => 's3',
 			'key'    => 'your-key',
 			'secret' => 'your-secret',

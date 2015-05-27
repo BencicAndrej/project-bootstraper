@@ -2,6 +2,7 @@
 // Forms
 // --------------------------------------------------
 
+
 // Normalize non-controls
 //
 // Restyle and baseline non-control form elements.
@@ -34,6 +35,7 @@ label {
   margin-bottom: 5px;
   font-weight: bold;
 }
+
 
 // Normalize form controls
 //
@@ -86,6 +88,7 @@ output {
   line-height: @line-height-base;
   color: @input-color;
 }
+
 
 // Common form controls
 //
@@ -174,14 +177,12 @@ input[type="search"] {
   input[type="month"] {
     line-height: @input-height-base;
   }
-
   input[type="date"].input-sm,
   input[type="time"].input-sm,
   input[type="datetime-local"].input-sm,
   input[type="month"].input-sm {
     line-height: @input-height-small;
   }
-
   input[type="date"].input-lg,
   input[type="time"].input-lg,
   input[type="datetime-local"].input-lg,
@@ -218,7 +219,6 @@ input[type="search"] {
     cursor: pointer;
   }
 }
-
 .radio input[type="radio"],
 .radio-inline input[type="radio"],
 .checkbox input[type="checkbox"],
@@ -243,7 +243,6 @@ input[type="search"] {
   font-weight: normal;
   cursor: pointer;
 }
-
 .radio-inline + .radio-inline,
 .checkbox-inline + .checkbox-inline {
   margin-top: 0;
@@ -262,7 +261,6 @@ input[type="checkbox"] {
     cursor: @cursor-disabled;
   }
 }
-
 // These classes are used directly on <label>s
 .radio-inline,
 .checkbox-inline {
@@ -271,7 +269,6 @@ input[type="checkbox"] {
     cursor: @cursor-disabled;
   }
 }
-
 // These classes are used on elements with <label> descendants
 .radio,
 .checkbox {
@@ -330,7 +327,6 @@ input[type="checkbox"] {
     padding-right: (@input-height-base * 1.25);
   }
 }
-
 // Feedback icon (requires .glyphicon classes)
 .form-control-feedback {
   position: absolute;
@@ -344,13 +340,11 @@ input[type="checkbox"] {
   text-align: center;
   pointer-events: none;
 }
-
 .input-lg + .form-control-feedback {
   width: @input-height-large;
   height: @input-height-large;
   line-height: @input-height-large;
 }
-
 .input-sm + .form-control-feedback {
   width: @input-height-small;
   height: @input-height-small;
@@ -361,11 +355,9 @@ input[type="checkbox"] {
 .has-success {
   .form-control-validation(@state-success-text; @state-success-text; @state-success-bg);
 }
-
 .has-warning {
   .form-control-validation(@state-warning-text; @state-warning-text; @state-warning-bg);
 }
-
 .has-error {
   .form-control-validation(@state-danger-text; @state-danger-text; @state-danger-bg);
 }
@@ -462,7 +454,6 @@ input[type="checkbox"] {
         padding-left: 0;
       }
     }
-
     .radio input[type="radio"],
     .checkbox input[type="checkbox"] {
       position: relative;

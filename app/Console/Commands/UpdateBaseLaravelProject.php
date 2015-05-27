@@ -2,8 +2,6 @@
 
 use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;
-use Symfony\Component\Console\Input\InputArgument;
-use Symfony\Component\Console\Input\InputOption;
 
 class UpdateBaseLaravelProject extends Command {
 
@@ -55,6 +53,13 @@ class UpdateBaseLaravelProject extends Command {
 		$appConfigPath = $basePath . "config/app.php";
 		file_put_contents($appConfigPath, preg_replace("/UTC/", "Europe/Belgrade", file_get_contents($appConfigPath)));
 
+		$ignorePath = $basePath . ".gitignore";
+		file_put_contents($ignorePath, "/.idea", FILE_APPEND);
+
+		$this->filesystem->delete($basePath . "composer.lock");
+
+		$this->filesystem->cleanDirectory($basePath . "database/migrations");
+
 		$this->filesystem->deleteDirectory($basePath . "vendor");
 	}
 
@@ -65,7 +70,6 @@ class UpdateBaseLaravelProject extends Command {
 	 */
 	protected function getArguments() {
 		return [
-			['config', InputArgument::OPTIONAL, 'Path to the configuration file.', 'generator.xml'],
 		];
 	}
 
@@ -76,7 +80,6 @@ class UpdateBaseLaravelProject extends Command {
 	 */
 	protected function getOptions() {
 		return [
-			['example', null, InputOption::VALUE_OPTIONAL, 'An example option.', null],
 		];
 	}
 

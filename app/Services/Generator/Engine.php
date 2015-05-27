@@ -6,6 +6,7 @@ use Norm\Services\Generator\Modules\Module;
 use Norm\Services\Generator\Modules\ProjectModule;
 use Norm\Services\Generator\Modules\RepositoryModule;
 use Norm\Services\Generator\Modules\ServiceModule;
+use Norm\Services\Generator\Modules\ServiceProviderModule;
 use Norm\Services\Generator\Readers\XmlNodeReader;
 
 class Engine {
@@ -15,7 +16,7 @@ class Engine {
 	 * @var array
 	 */
 	protected $modules = [
-		'project'    => ProjectModule::class,
+		'project' => [ProjectModule::class, ServiceProviderModule::class],
 		'entity'     => [EntityModule::class, MigrationModule::class],
 		'repository' => RepositoryModule::class,
 		'service'    => ServiceModule::class,
@@ -34,6 +35,12 @@ class Engine {
 	 * @var string
 	 */
 	protected $workbenchPath = 'resources/workbench/';
+
+	function __construct($configPath = null) {
+		if ($configPath) {
+			$this->configPath = $configPath;
+		}
+	}
 
 	/**
 	 * Main function that loads the node tree from the config file, and searches for modules that match.

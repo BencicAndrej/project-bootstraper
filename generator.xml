@@ -1,38 +1,64 @@
-<project name="Coaches" database="coaches">
+<project name="Sparks" database="sparks">
 
 	<entities>
-		<entity name="User" table="users" timestamps="false">
-			<guarded name="id" />
+        <entity name="Ping" table="pings" timestamps="true">
+            <guarded name="id"/>
 
             <attribute name="id" type="increments" />
-            <attribute name="first_name" type="string" default="John" unique="false" nullable="true" />
-            <attribute name="last_name" type="string" default="Doe" unique="false" nullable="false" />
+            <attribute name="lat" type="double"/>
+            <attribute name="lng" type="double"/>
+            <attribute name="location_id" type="integer" unsigned="true"/>
+            <attribute name="cluster_id" type="integer" unsigned="true"/>
 
-			<relation type="hasMany" name="phoneNumbers" entity="PhoneNumber" foreignKey="user_id" />
-			<relation type="hasOne" name="location" entity="Location" foreignKey="user_id" />
-			
-			<repository name="UserRepository" interface="true" implementation="EloquentUserRepository" decorator="true" />
+            <relation type="belongsTo" name="location" entity="Location" localKey="location_id"/>
+            <relation type="belongsTo" name="cluster" entity="Cluster" localKey="cluster_id"/>
+            <relation type="hasMany" name="resources" entity="Resource" foreignKey="ping_id"/>
 
-			<command name="CreateUser" />
-		</entity>
-        <entity name="PhoneNumber" table="phone_numbers" timestamps="true">
+            <repository name="PingRepository" interface="true" implementation="EloquentPingRepository"/>
 
-            <attribute name="user_id" type="integer" unsigned="true" />
-            <attribute name="type" type="integer" default="0" />
-            <attribute name="number" type="string" nullable="false" />
+        </entity>
 
-			<relation type="belongsTo" name="owner" entity="User" localKey="user_id" />
-		</entity>
-		<entity name="Location" table="locations">
+        <entity name="Cluster" table="clusters" timestamps="false">
+            <guarded name="id"/>
 
-            <attribute name="user_id" type="integer" unsigned="true" />
-            <attribute name="address" type="string" nullable="false" />
-            <attribute name="number" type="string" nullable="false" />
+            <attribute name="id" type="increments"/>
+            <attribute name="lat" type="double"/>
+            <attribute name="lng" type="double"/>
+            <attribute name="start" type="datetime"/>
+            <attribute name="end" type="datetime"/>
+            <attribute name="name" type="string" nullable="true"/>
+            <attribute name="description" type="text" nullable="true"/>
+            <attribute name="location_id" type="integer" unsigned="true"/>
+            <attribute name="display_image" type="string" nullable="true"/>
 
-            <repository name="LocationRepository"/>
+            <relation type="belongsTo" name="location" entity="Location" localKey="location_id"/>
+            <relation type="hasMany" name="pings" entity="Ping" foreignKey="cluster_id"/>
 
-            <relation type="belongsTo" name="tenant" entity="User" localKey="user_id"/>
-		</entity>
+            <repository name="ClusterRepository" interface="true" implementation="EloquentClusterRepository"/>
+        </entity>
+
+        <entity name="Location" table="locations" timestamps="false">
+            <guarded name="id"/>
+
+            <attribute name="id" type="increments"/>
+            <attribute name="lat" type="double"/>
+            <attribute name="lng" type="double"/>
+            <attribute name="name" type="string" nullable="true"/>
+            <attribute name="description" type="text" nullable="true"/>
+            <attribute name="display_image" type="string" nullable="true"/>
+
+            <repository name="LocationRepository" interface="true" implementation="EloquentLocationRepository"/>
+        </entity>
+
+        <entity name="Resource" table="resources" timestamps="false">
+            <guarded name="id"/>
+
+            <attribute name="id" type="increments"/>
+            <attribute name="ping_id" type="integer" unsigned="true"/>
+            <attribute name="type" type="integer"/>
+            <attribute name="src" type="text"/>
+            <attribute name="relevance" type="integer"/>
+        </entity>
 	</entities>
 
 	<services>

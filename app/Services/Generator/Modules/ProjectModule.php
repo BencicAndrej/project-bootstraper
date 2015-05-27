@@ -10,13 +10,24 @@ class ProjectModule implements Module {
 
 		$file = new Filesystem();
 
+		//Clear staging are if necessary.
 		if ($file->isDirectory($projectPath)) {
 			$file->deleteDirectory($projectPath);
 		}
 
+		//Copy core files.
 		$file->copyDirectory(config('generator.base_project_path'), $projectPath);
 
-		
-		shell_exec("php {$projectPath}/artisan app:name Norm");
+		$envPath = config('generator.workbench_path') . "{$node->getAttribute('name')}/.env";
+		if ($node->getAttribute('database')) {
+			$file->put(
+				$envPath,
+				preg_replace(
+					"/DB_DATABASE=homestead/",
+					"DB_DATABASE={$node->getAttribute('database')}",
+					$file->get($envPath)
+				)
+			);
+		}
 	}
 }

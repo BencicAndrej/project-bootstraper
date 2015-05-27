@@ -14,7 +14,7 @@ return [
 	|
 	*/
 
-	'mailgun'  => [
+	'mailgun' => [
 		'domain' => '',
 		'secret' => '',
 	],
@@ -23,13 +23,13 @@ return [
 		'secret' => '',
 	],
 
-	'ses'      => [
-		'key'    => '',
+	'ses'     => [
+		'key' => '',
 		'secret' => '',
 		'region' => 'us-east-1',
 	],
 
-	'stripe'   => [
+	'stripe'  => [
 		'model'  => 'App\User',
 		'secret' => '',
 	],

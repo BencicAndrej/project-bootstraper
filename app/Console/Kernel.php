@@ -2,6 +2,8 @@
 
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use Norm\Console\Commands\RunGenerator;
+use Norm\Console\Commands\UpdateBaseLaravelProject;
 
 class Kernel extends ConsoleKernel {
 
@@ -11,7 +13,8 @@ class Kernel extends ConsoleKernel {
 	 * @var array
 	 */
 	protected $commands = [
-		'Norm\Console\Commands\UpdateBaseLaravelProject',
+		UpdateBaseLaravelProject::class,
+		RunGenerator::class,
 	];
 
 	/**
